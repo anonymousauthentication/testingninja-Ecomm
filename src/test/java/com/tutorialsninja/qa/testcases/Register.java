@@ -13,18 +13,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.tutorialninja.qa.base.Base;
 import com.tutorialninja.qa.utils.Utilities;
 
-public class Register {
+public class Register extends Base {
 	WebDriver driver;
 
 	@BeforeMethod
 	public void setup() {
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-		driver.get("https://tutorialsninja.com/demo/");
+		driver = initializeBrowserAndOpenApplication("chrome");
 		driver.findElement(By.linkText("My Account")).click();
 		driver.findElement(By.linkText("Register")).click();
 	}

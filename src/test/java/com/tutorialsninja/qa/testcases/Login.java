@@ -12,34 +12,22 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.tutorialninja.qa.base.Base;
 import com.tutorialninja.qa.utils.Utilities;
 
-public class Login {
+public class Login extends Base{
 	WebDriver driver;
-
-	@AfterMethod
-	public void tearDown() {
-		driver.quit();
-	}
 
 	@BeforeMethod
 	public void setup() {
-		String browserName = "chrome";
-		if (browserName.equals("chrome")) {
-			driver = new ChromeDriver();
-		} else if (browserName.equals("firefox")) {
-			driver = new FirefoxDriver();
-		} else if (browserName.equals("edge")) {
-			driver = new EdgeDriver();
-		} else {
-			System.out.println("Please choose specific Browser");
-		}
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-		driver.get("https://tutorialsninja.com/demo/");
+		driver = initializeBrowserAndOpenApplication("chrome");
 		driver.findElement(By.linkText("My Account")).click();
 		driver.findElement(By.linkText("Login")).click();
+	}
+	
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
 	}
 
 	@Test
