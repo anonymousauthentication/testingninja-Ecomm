@@ -12,6 +12,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.tutorialninja.qa.utils.Utilities;
+
 public class Login {
 	WebDriver driver;
 
@@ -50,8 +52,7 @@ public class Login {
 
 	@Test
 	public void verifyLoginWithInvalidCredentials() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]"))
-				.sendKeys("manoharkantjoshi" + dateTimeStamp() + "@gmail.com");
+		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
 		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@1234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
@@ -61,8 +62,7 @@ public class Login {
 	}
 
 	public void verifyLoginWithInvalidEmailValidPassword() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]"))
-				.sendKeys("manoharkantjoshi" + dateTimeStamp() + "@gmail.com");
+		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
 		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@123");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
@@ -89,11 +89,6 @@ public class Login {
 		String ExpectedMessage = "Warning: No match for E-Mail Address and/or Password.";
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 		// div[contains(@class,"alert")]
-	}
-
-	public String dateTimeStamp() {
-		Date date = new Date();
-		return date.toString().replace(" ", "_").replace(":", "_");
 	}
 
 }
