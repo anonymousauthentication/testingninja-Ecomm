@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import com.tutorialninja.qa.base.Base;
 import com.tutorialninja.qa.utils.Utilities;
 
-public class Login extends Base{
+public class Login extends Base {
 	WebDriver driver;
 
 	@BeforeMethod
@@ -24,7 +24,7 @@ public class Login extends Base{
 		driver.findElement(By.linkText("My Account")).click();
 		driver.findElement(By.linkText("Login")).click();
 	}
-	
+
 	@AfterMethod
 	public void tearDown() {
 		driver.quit();
@@ -49,6 +49,7 @@ public class Login extends Base{
 		// div[contains(@class,"alert")]
 	}
 
+	@Test
 	public void verifyLoginWithInvalidEmailValidPassword() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
 		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@123");
@@ -59,6 +60,7 @@ public class Login extends Base{
 		// div[contains(@class,"alert")]
 	}
 
+	@Test
 	public void verifyLoginWithValidEmailInvalidPassword() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys("manoharkantjoshi@gmail.com");
 		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@1234");
@@ -69,6 +71,7 @@ public class Login extends Base{
 		// div[contains(@class,"alert")]
 	}
 
+	@Test
 	public void VerifyLoginWithoutCredentials() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys("");
 		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("");
