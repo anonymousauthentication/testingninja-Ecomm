@@ -19,7 +19,8 @@ public class Login extends Base {
 	WebDriver driver;
 
 	@BeforeMethod
-	public void setup() {
+	public void setup()  {
+		loadPropertiesFile();
 		driver = initializeBrowserAndOpenApplication("chrome");
 		driver.findElement(By.linkText("My Account")).click();
 		driver.findElement(By.linkText("Login")).click();
