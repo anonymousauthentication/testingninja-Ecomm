@@ -12,7 +12,8 @@ public class Register extends Base {
 
 	@BeforeMethod
 	public void setup() {
-		driver = initializeBrowserAndOpenApplication("chrome");
+		loadPropertiesFile();
+		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
 		driver.findElement(By.linkText("My Account")).click();
 		driver.findElement(By.linkText("Register")).click();
 	}

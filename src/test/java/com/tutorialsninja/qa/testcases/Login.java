@@ -1,12 +1,8 @@
 package com.tutorialsninja.qa.testcases;
 
-import java.time.Duration;
-import java.util.Date;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +17,7 @@ public class Login extends Base {
 	@BeforeMethod
 	public void setup()  {
 		loadPropertiesFile();
-		driver = initializeBrowserAndOpenApplication("chrome");
+		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
 		driver.findElement(By.linkText("My Account")).click();
 		driver.findElement(By.linkText("Login")).click();
 	}
@@ -33,8 +29,8 @@ public class Login extends Base {
 
 	@Test
 	public void verifyLoginWithValidCredentials() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys("manoharkantjoshi@gmail.com");
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@123");
+		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(prop.getProperty("validemail"));
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("pass"));
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
 	}
@@ -53,7 +49,7 @@ public class Login extends Base {
 	@Test
 	public void verifyLoginWithInvalidEmailValidPassword() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@123");
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("pass"));
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
 		String ExpectedMessage = "Warning: No match for E-Mail Address and/or Password.";
@@ -63,7 +59,7 @@ public class Login extends Base {
 
 	@Test
 	public void verifyLoginWithValidEmailInvalidPassword() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys("manoharkantjoshi@gmail.com");
+		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(prop.getProperty("validemail"));
 		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@1234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();

@@ -12,6 +12,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.tutorialninja.qa.utils.Utilities;
+
 public class Base {
 	
 	WebDriver driver;
@@ -33,11 +35,10 @@ public class Base {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public WebDriver initializeBrowserAndOpenApplication(String browserName) {
-		if (browserName.equals("chrome")) {
+		if (browserName.equalsIgnoreCase("chrome")) {
 			driver = new ChromeDriver();
 		} else if (browserName.equals("firefox")) {
 			driver = new FirefoxDriver();
@@ -47,8 +48,8 @@ public class Base {
 			System.out.println("Please choose specific Browser");
 		}
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-	//	driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Utilities.IMPLICITE_WAIT_TIME));
+	//  driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Utilities.PAGE_WAIT_TIME));
 		driver.get(prop.getProperty("url"));
 		return driver;
 	}

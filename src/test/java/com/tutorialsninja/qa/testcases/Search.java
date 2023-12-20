@@ -14,7 +14,8 @@ public class Search extends Base {
 
 	@BeforeMethod
 	public void setup() {
-		driver = initializeBrowserAndOpenApplication("chrome");
+		loadPropertiesFile();
+		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
 	}
 
 	@AfterMethod
@@ -44,5 +45,4 @@ public class Search extends Base {
 	    String errorMessage = driver.findElement(By.xpath("//div[@id=\"content\"]/p[2]")).getText();	
 		Assert.assertEquals(errorMessage, "There is no product that matches the search criteria.","Product is  Present");
 	}
-
 }
