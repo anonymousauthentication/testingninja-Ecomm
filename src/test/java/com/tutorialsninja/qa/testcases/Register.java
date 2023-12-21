@@ -25,46 +25,47 @@ public class Register extends Base {
 
 	@Test
 	public void registerWithMandetoryFields() {
-		driver.findElement(By.xpath("//input[@name=\"firstname\"]")).sendKeys("Arun");
-		driver.findElement(By.cssSelector("input[name=\"lastname\"]")).sendKeys("Mootori");
+		driver.findElement(By.xpath("//input[@name=\"firstname\"]")).sendKeys(dataProp.getProperty("firstName"));
+		driver.findElement(By.cssSelector("input[name=\"lastname\"]")).sendKeys(dataProp.getProperty("lastName"));
 		driver.findElement(By.cssSelector("input[name*=\"mail\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[contains(@name,'phone')]")).sendKeys("7889564512");
-		driver.findElement(By.cssSelector("div input[name=\"password\"] ")).sendKeys("Admin@123");
-		driver.findElement(By.cssSelector("input[name=\"confirm\"]")).sendKeys("Admin@123");
+		driver.findElement(By.xpath("//input[contains(@name,'phone')]")).sendKeys(dataProp.getProperty("telePhoneNumber"));
+		driver.findElement(By.cssSelector("div input[name=\"password\"] ")).sendKeys(prop.getProperty("validpass"));
+		driver.findElement(By.cssSelector("input[name=\"confirm\"]")).sendKeys(prop.getProperty("validpass"));
 		driver.findElement(By.cssSelector("input[name=\"agree\"]")).click();
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String successfulMessage = driver.findElement(By.xpath("//div[@id=\"content\"] //h1")).getText();
-		Assert.assertEquals(successfulMessage, "Your Account Has Been Created!");
+		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));
 	}
 
 	@Test
 	public void registerWithAllMandatoryFiels() throws InterruptedException {
-		driver.findElement(By.xpath("//input[@name=\"firstname\"]")).sendKeys("Arun");
-		driver.findElement(By.cssSelector("input[name=\"lastname\"]")).sendKeys("Mootori");
+		driver.findElement(By.xpath("//input[@name=\"firstname\"]")).sendKeys(dataProp.getProperty("firstName"));
+		driver.findElement(By.cssSelector("input[name=\"lastname\"]")).sendKeys(dataProp.getProperty("lastName"));
 		driver.findElement(By.cssSelector("input[name*=\"mail\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[contains(@name,'phone')]")).sendKeys("7889564512");
-		driver.findElement(By.cssSelector("div input[name=\"password\"] ")).sendKeys("Admin@123");
-		driver.findElement(By.cssSelector("input[name=\"confirm\"]")).sendKeys("Admin@123");
+		driver.findElement(By.xpath("//input[contains(@name,'phone')]")).sendKeys(dataProp.getProperty("telePhoneNumber"));
+		driver.findElement(By.cssSelector("div input[name=\"password\"] ")).sendKeys(prop.getProperty("validpass"));
+		driver.findElement(By.cssSelector("input[name=\"confirm\"]")).sendKeys(prop.getProperty("validpass"));
 		driver.findElement(By.cssSelector("input[value='1'][name='newsletter']")).click();
 		driver.findElement(By.cssSelector("input[name=\"agree\"]")).click();
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String successfulMessage = driver.findElement(By.xpath("//div[@id=\"content\"] //h1")).getText();
-		Assert.assertEquals(successfulMessage, "Your Account Has Been Created!");
+		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));
+	
+		
 	}
 
 	@Test
 	public void registerWithAlreadyExistEmail() {
-		driver.findElement(By.xpath("//input[@name=\"firstname\"]")).sendKeys("Arun");
-		driver.findElement(By.cssSelector("input[name=\"lastname\"]")).sendKeys("Mootori");
+		driver.findElement(By.xpath("//input[@name=\"firstname\"]")).sendKeys(dataProp.getProperty("firstName"));
+		driver.findElement(By.cssSelector("input[name=\"lastname\"]")).sendKeys(dataProp.getProperty("lastName"));
 		driver.findElement(By.cssSelector("input[name*=\"mail\"]")).sendKeys("testdemo2@gmail.com");
-		driver.findElement(By.xpath("//input[contains(@name,'phone')]")).sendKeys("7889564512");
-		driver.findElement(By.cssSelector("div input[name=\"password\"] ")).sendKeys("Admin@123");
-		driver.findElement(By.cssSelector("input[name=\"confirm\"]")).sendKeys("Admin@123");
+		driver.findElement(By.cssSelector("div input[name=\"password\"] ")).sendKeys(prop.getProperty("validpass"));
+		driver.findElement(By.cssSelector("input[name=\"confirm\"]")).sendKeys(prop.getProperty("validpass"));
+		driver.findElement(By.cssSelector("input[value='1'][name='newsletter']")).click();
 		driver.findElement(By.cssSelector("input[name=\"agree\"]")).click();
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		driver.findElement(By.cssSelector("input[type=\"radio\"][value=\"1\"][name*=\"newsletter\"]")).click();
 		String successfulMessage = driver.findElement(By.cssSelector("div[class*=\"alert-danger\"]")).getText();
-		Assert.assertEquals(successfulMessage, "Warning: E-Mail Address is already registered!");
+		Assert.assertEquals(successfulMessage, dataProp.getProperty("emailAlreadyRegister"));
 
 	}
 
@@ -74,21 +75,21 @@ public class Register extends Base {
         driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
 		String privacyPolicyMessag = driver.findElement(By.cssSelector("div[class*=\"alert-danger\"]")).getText();
-		Assert.assertEquals(privacyPolicyMessag, "Warning: You must agree to the Privacy Policy!");
+		Assert.assertEquals(privacyPolicyMessag, dataProp.getProperty("privacyPolicyWarning"));
 
 		String firstNameValidation = driver.findElement(By.xpath("//input[@name=\"firstname\"]/following-sibling::div")).getText();
-		Assert.assertEquals(firstNameValidation, "First Name must be between 1 and 32 characters!");
+		Assert.assertEquals(firstNameValidation, dataProp.getProperty("firstNameValidation"));
 
 		String lastNameValidation = driver.findElement(By.xpath("//input[@name=\"lastname\"]/following-sibling::div")).getText();
-		Assert.assertEquals(lastNameValidation, "Last Name must be between 1 and 32 characters!");
+		Assert.assertEquals(lastNameValidation, dataProp.getProperty("lastNameValidation"));
 
 		String emailValidation = driver.findElement(By.xpath("//input[@name=\"email\"]/following-sibling::div")).getText();
-		Assert.assertEquals(emailValidation, "E-Mail Address does not appear to be valid!");
+		Assert.assertEquals(emailValidation, dataProp.getProperty("emailValidation"));
 
 		String tetephoneValidation = driver.findElement(By.xpath("//div[text()=\"Telephone must be between 3 and 32 characters!\"]")).getText();
-		Assert.assertEquals(tetephoneValidation, "Telephone must be between 3 and 32 characters!");
+		Assert.assertEquals(tetephoneValidation, dataProp.getProperty("tetephoneValidation"));
 
 		String passwordValidation = driver.findElement(By.xpath("//input[@name=\"password\"]/following-sibling::div"))				.getText();
-		Assert.assertEquals(passwordValidation, "Password must be between 4 and 20 characters!");
+		Assert.assertEquals(passwordValidation, dataProp.getProperty("passwordValidation"));
 	}
 }

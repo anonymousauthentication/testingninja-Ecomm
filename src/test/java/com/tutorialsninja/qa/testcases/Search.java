@@ -25,24 +25,23 @@ public class Search extends Base {
 
 	@Test
 	public void verifySearchWithValidproduct() {
-		driver.findElement(By.cssSelector("input[name=\"search\"]")).sendKeys("HP");
+		driver.findElement(By.cssSelector("input[name=\"search\"]")).sendKeys(dataProp.getProperty("validProduct"));
 		driver.findElement(By.xpath("//i[@class='fa fa-search']")).click();
 		Assert.assertTrue(driver.findElement(By.linkText("HP LP3065")).isDisplayed(),"Product is not Present");
 	}
 	
 	@Test
 	public void  verifySearchWithInvalidproduct() {
-		driver.findElement(By.cssSelector("input[name=\"search\"]")).sendKeys("Honda");
+		driver.findElement(By.cssSelector("input[name=\"search\"]")).sendKeys(dataProp.getProperty("invalidProduct"));
 		driver.findElement(By.xpath("//i[@class='fa fa-search']")).click();
 	    String errorMessage = driver.findElement(By.xpath("//div[@id=\"content\"]/p[2]")).getText();	
-		Assert.assertEquals(errorMessage, "There is no product that matches the search criteria.","Product is  Present");
+		Assert.assertEquals(errorMessage, dataProp.getProperty("noProductPresentMessage"),"Product is  Present");
 	}
 	
 	@Test
 	public void verifySearchWithNoProduct() {
-		driver.findElement(By.cssSelector("input[name=\"search\"]")).sendKeys("");
 		driver.findElement(By.xpath("//i[@class='fa fa-search']")).click();
 	    String errorMessage = driver.findElement(By.xpath("//div[@id=\"content\"]/p[2]")).getText();	
-		Assert.assertEquals(errorMessage, "There is no product that matches the search criteria.","Product is  Present");
+		Assert.assertEquals(errorMessage, dataProp.getProperty("noProductPresentMessage"),"Product is  Present");
 	}
 }

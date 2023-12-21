@@ -30,7 +30,7 @@ public class Login extends Base {
 	@Test
 	public void verifyLoginWithValidCredentials() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(prop.getProperty("validemail"));
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("pass"));
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("validpass"));
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
 	}
@@ -38,10 +38,10 @@ public class Login extends Base {
 	@Test
 	public void verifyLoginWithInvalidCredentials() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@1234");
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(dataProp.getProperty("invalidPass"));
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
-		String ExpectedMessage = "Warning: No match for E-Mail Address and/or Password.";
+		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 		// div[contains(@class,"alert")]
 	}
@@ -49,10 +49,10 @@ public class Login extends Base {
 	@Test
 	public void verifyLoginWithInvalidEmailValidPassword() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("pass"));
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("validpass"));
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
-		String ExpectedMessage = "Warning: No match for E-Mail Address and/or Password.";
+		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 		// div[contains(@class,"alert")]
 	}
@@ -60,21 +60,19 @@ public class Login extends Base {
 	@Test
 	public void verifyLoginWithValidEmailInvalidPassword() {
 		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(prop.getProperty("validemail"));
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("Admin@1234");
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(dataProp.getProperty("invalidPass"));
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
-		String ExpectedMessage = "Warning: No match for E-Mail Address and/or Password.";
+		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 		// div[contains(@class,"alert")]
 	}
 
 	@Test
 	public void VerifyLoginWithoutCredentials() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys("");
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys("");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
-		String ExpectedMessage = "Warning: No match for E-Mail Address and/or Password.";
+		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 		// div[contains(@class,"alert")]
 	}

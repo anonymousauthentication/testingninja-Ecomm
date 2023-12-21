@@ -18,21 +18,25 @@ public class Base {
 	
 	WebDriver driver;
 	public Properties prop;
+	public Properties dataProp;
 	
 	public void loadPropertiesFile()  {
 	    prop = new Properties();
 		File files = new File(System.getProperty("user.dir")+"\\src\\main\\java\\com\\tutorialninja\\qa\\config\\config.properties");
-		FileInputStream fis = null;
 		try {
-			fis = new FileInputStream(files);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		FileInputStream fis = new FileInputStream(files);
+	    prop.load(fis);
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		dataProp = new Properties();
+		File dataFiles = new File(System.getProperty("user.dir")+"\\src\\main\\java\\com\\tutorialninja\\qa\\testdata\\testdata.properties");
 		try {
-			prop.load(fis);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		FileInputStream fisData = new FileInputStream(dataFiles);
+		dataProp.load(fisData);}
+		catch(Exception e){
 			e.printStackTrace();
 		}
 	}
