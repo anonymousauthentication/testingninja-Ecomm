@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="Test(failed)">
+<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.tutorialsninja.qa.testcases.Register">
-        <methods>
-          <include name="registerWithhoutFillingAnyDetail"/>
-          <include name="setup"/>
-          <include name="tearDown"/>
-        </methods>
-      </class> <!-- com.tutorialsninja.qa.testcases.Register -->
       <class name="com.tutorialsninja.qa.testcases.Login">
         <methods>
-          <include name="verifyLoginWithInvalidEmailValidPassword"/>
           <include name="tearDown"/>
           <include name="setup"/>
-          <include name="verifyLoginWithInvalidCredentials"/>
           <include name="verifyLoginWithValidCredentials"/>
         </methods>
       </class> <!-- com.tutorialsninja.qa.testcases.Login -->
     </classes>
-  </test> <!-- Test(failed) -->
-</suite> <!-- Failed suite [Suite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

@@ -1,11 +1,11 @@
 package com.tutorialsninja.qa.testcases;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.tutorialninja.qa.base.Base;
@@ -15,7 +15,7 @@ public class Login extends Base {
 	WebDriver driver;
 
 	@BeforeMethod
-	public void setup()  {
+	public void setup() {
 		loadPropertiesFile();
 		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
 		driver.findElement(By.linkText("My Account")).click();
@@ -27,10 +27,16 @@ public class Login extends Base {
 		driver.quit();
 	}
 
-	@Test
-	public void verifyLoginWithValidCredentials() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(prop.getProperty("validemail"));
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("validpass"));
+	@DataProvider
+	public Object supplyTestData() {
+		Object[][] data = Utilities.getTestDataFromExcel("Login");
+		return data;
+	}
+
+	@Test(dataProvider = "supplyTestData")
+	public void verifyLoginWithValidCredentials(String email, String pass) {
+		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(email);
+		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(pass);
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
 	}
