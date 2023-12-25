@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.tutorialninja.qa.base.Base;
+import com.tutorialninja.qa.pageObject.AccountPage;
 import com.tutorialninja.qa.pageObject.HomePage;
 import com.tutorialninja.qa.pageObject.LoginPage;
 import com.tutorialninja.qa.utils.Utilities;
@@ -43,49 +44,49 @@ public class Login extends Base {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(email);
 		loginPage.enterPassword(pass);
-		loginPage.submitLogin();
-		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+		AccountPage accountPage = new AccountPage(driver);
+		Assert.assertTrue(accountPage.isaccountPageDisplayed());
 	}
 
 	@Test
 	public void verifyLoginWithInvalidCredentials() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(dataProp.getProperty("invalidPass"));
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
+		loginPage.enterPassword(dataProp.getProperty("invalidPass"));
+		loginPage.submitLogin();
+		String actualWarningMessage = loginPage.invalidLoginCredWarning();
 		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
-		// div[contains(@class,"alert")]
 	}
 
 	@Test
 	public void verifyLoginWithInvalidEmailValidPassword() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(Utilities.generateEmailWithTimeStamp());
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(prop.getProperty("validpass"));
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
+		loginPage.enterPassword(dataProp.getProperty("validpass"));
+		loginPage.submitLogin();
+		String actualWarningMessage = loginPage.invalidLoginCredWarning();
 		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
-		// div[contains(@class,"alert")]
 	}
 
 	@Test
 	public void verifyLoginWithValidEmailInvalidPassword() {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(prop.getProperty("validemail"));
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(dataProp.getProperty("invalidPass"));
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.enterEmailAddress(prop.getProperty("validemail"));
+		loginPage.enterPassword(dataProp.getProperty("invalidPass"));
+		loginPage.submitLogin();
+		String actualWarningMessage = loginPage.invalidLoginCredWarning();
 		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
-		// div[contains(@class,"alert")]
 	}
 
 	@Test
 	public void VerifyLoginWithoutCredentials() {
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		String actualWarningMessage = driver.findElement(By.cssSelector("div[class*=\"alert\"]")).getText();
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.submitLogin();
+		String actualWarningMessage = loginPage.invalidLoginCredWarning();
 		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
-		// div[contains(@class,"alert")]
 	}
 }

@@ -22,6 +22,9 @@ public class LoginPage {
 	@FindBy(css="input[type=\'submit\"]")
 	private WebElement loginSubmit;
 	
+	@FindBy(css="div[class*=\"alert\"]")
+	private WebElement invalidLoggedinCredWarning;
+	
 	public void enterEmailAddress(String email) {
 		emailFiels.sendKeys(email);
 	}
@@ -32,6 +35,10 @@ public class LoginPage {
 	
 	public void submitLogin() {
 		loginSubmit.click();
+	}
+	
+	public String invalidLoginCredWarning() {
+		return invalidLoggedinCredWarning.getText();
 	}
 
 }
