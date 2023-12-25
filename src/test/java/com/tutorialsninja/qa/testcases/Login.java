@@ -9,6 +9,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.tutorialninja.qa.base.Base;
+import com.tutorialninja.qa.pageObject.HomePage;
+import com.tutorialninja.qa.pageObject.LoginPage;
 import com.tutorialninja.qa.utils.Utilities;
 
 public class Login extends Base {
@@ -18,7 +20,9 @@ public class Login extends Base {
 	public void setup() {
 		loadPropertiesFile();
 		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
-		driver.findElement(By.linkText("My Account")).click();
+		HomePage homePage = new HomePage(driver);
+		homePage.clickOnMyAccount();
+		homePage.clickOnLogin();
 		driver.findElement(By.linkText("Login")).click();
 	}
 
@@ -36,9 +40,10 @@ public class Login extends Base {
 
 	@Test(dataProvider = "supplyTestData")
 	public void verifyLoginWithValidCredentials(String email, String pass) {
-		driver.findElement(By.cssSelector("input[name=\"email\"]")).sendKeys(email);
-		driver.findElement(By.xpath("//input[@name=\"password\"]")).sendKeys(pass);
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.enterEmailAddress(email);
+		loginPage.enterPassword(pass);
+		loginPage.submitLogin();
 		Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
 	}
 
@@ -83,5 +88,4 @@ public class Login extends Base {
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 		// div[contains(@class,"alert")]
 	}
-
 }
