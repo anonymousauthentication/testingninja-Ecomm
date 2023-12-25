@@ -30,6 +30,7 @@ public class Login extends Base {
 	@DataProvider
 	public Object supplyTestData() {
 		Object[][] data = Utilities.getTestDataFromExcel("Login");
+		//Object data[][] = {{"tst@fff.com","Admin123"},{"test22@gmi.com","Admin123"}};
 		return data;
 	}
 

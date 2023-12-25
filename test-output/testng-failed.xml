@@ -7,7 +7,7 @@
         <methods>
           <include name="tearDown"/>
           <include name="setup"/>
-          <include name="verifyLoginWithValidCredentials"/>
+          <include name="verifyLoginWithValidCredentials" invocation-numbers="0 1"/>
         </methods>
       </class> <!-- com.tutorialsninja.qa.testcases.Login -->
     </classes>

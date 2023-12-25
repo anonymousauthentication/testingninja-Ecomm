@@ -34,16 +34,25 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(workbook.getSheetName(0));
-		XSSFSheet sheet = workbook.getSheet("Sheet1");
+		XSSFSheet sheet = workbook.getSheet(sheetname);
+		if (sheet == null) {
+		    throw new RuntimeException("Sheet with name '" + sheetname + "' not found in the workbook");
+		}
+		else {
+			System.out.println("Sheet found");
+		}
 		int rows = sheet.getLastRowNum();
-		int cols = sheet.getRow(1).getLastCellNum();
+		int cols = sheet.getRow(0).getLastCellNum();
+		
+		System.out.println(rows+" "+cols);
 
 		Object[][] data = new Object[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			XSSFRow row = sheet.getRow(i + 1);
+			
 			for (int j = 0; j < cols; j++) {
 				XSSFCell cell = row.getCell(j);
+				System.out.println(cell.getStringCellValue()); 
 				CellType celltype = cell.getCellType();
 
 				switch (celltype) {
