@@ -16,10 +16,10 @@ public class LoginPage {
 	@FindBy(css="input[name=\"email\"]")
 	private WebElement emailFiels;
 	
-	@FindBy(css="input[name=\'password\"]")
+	@FindBy(css="input[name=\"password\"]")
 	private WebElement passFiels;
 	
-	@FindBy(css="input[type=\'submit\"]")
+	@FindBy(css="input[type=\"submit\"]")
 	private WebElement loginSubmit;
 	
 	@FindBy(css="div[class*=\"alert\"]")
@@ -29,8 +29,8 @@ public class LoginPage {
 		emailFiels.sendKeys(email);
 	}
 	
-	public void enterPassword(String passFields) {
-		passFiels.click();
+	public void enterPassword(String pass) {
+		passFiels.sendKeys(pass);
 	}
 	
 	public void submitLogin() {

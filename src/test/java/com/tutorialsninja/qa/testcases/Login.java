@@ -44,6 +44,7 @@ public class Login extends Base {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(email);
 		loginPage.enterPassword(pass);
+		loginPage.submitLogin();
 		AccountPage accountPage = new AccountPage(driver);
 		Assert.assertTrue(accountPage.isaccountPageDisplayed());
 	}
@@ -63,7 +64,7 @@ public class Login extends Base {
 	public void verifyLoginWithInvalidEmailValidPassword() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
-		loginPage.enterPassword(dataProp.getProperty("validpass"));
+		loginPage.enterPassword(prop.getProperty("validpass"));
 		loginPage.submitLogin();
 		String actualWarningMessage = loginPage.invalidLoginCredWarning();
 		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");
