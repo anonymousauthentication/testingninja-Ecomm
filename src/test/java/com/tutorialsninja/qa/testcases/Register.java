@@ -26,7 +26,7 @@ public class Register extends Base {
 		driver.quit();
 	}
 
-	@Test
+	@Test(priority=1)
 	public void registerWithMandetoryFields() {
 		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.firstNameEnter(dataProp.getProperty("firstName"));
@@ -41,7 +41,7 @@ public class Register extends Base {
 		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));
 	}
 
-	@Test
+	@Test(priority=2)
 	public void registerWithAllMandatoryFiels() throws InterruptedException {
 		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.firstNameEnter(dataProp.getProperty("firstName"));
@@ -57,7 +57,7 @@ public class Register extends Base {
 		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));	
 	}
 
-	@Test
+	@Test(priority=3)
 	public void registerWithAlreadyExistEmail() {
 		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.firstNameEnter(dataProp.getProperty("firstName"));
@@ -74,7 +74,7 @@ public class Register extends Base {
 
 	}
 
-	@Test
+	@Test(priority=4)
 	public void registerWithhoutFillingAnyDetail() {
 
 		RegisterPage registerPage = new RegisterPage(driver);

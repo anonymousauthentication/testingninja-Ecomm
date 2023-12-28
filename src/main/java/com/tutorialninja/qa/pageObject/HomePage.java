@@ -19,12 +19,40 @@ public class HomePage {
 
 	@FindBy(linkText = "Login")
 	private WebElement loginOption;
+	
+	@FindBy(css="input[name=\"search\"]")
+	private WebElement searchBox;
+	
+	@FindBy(css="i[class*=\"search\"]")
+	private WebElement searchButton;
 
+	@FindBy(linkText="HP LP3065")
+	private WebElement isProductPresent;
+	
+	@FindBy(xpath="//div[@id=\"content\"]/p[2]")
+	WebElement noProductFoundError;
+	
 	public void clickOnMyAccount() {
 		myAccountDropDownMenu.click();
 	}
 
 	public void clickOnLogin() {
 		loginOption.click();
+	}
+	
+	public void searchBoxEnter(String searchTerm) {
+		searchBox.sendKeys(searchTerm);
+	}
+	
+	public void searchButtonClick() {
+		searchButton.click();
+	}
+	
+	public boolean isProductPresentAfterSearch() {
+		return isProductPresent.isDisplayed();
+	}
+	
+	public String noProductFoundErrorMessage() {
+		return noProductFoundError.getText();
 	}
 }

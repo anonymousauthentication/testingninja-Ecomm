@@ -49,7 +49,7 @@ public class Login extends Base {
 		Assert.assertTrue(accountPage.isaccountPageDisplayed());
 	}
 
-	@Test
+	@Test(priority=1)
 	public void verifyLoginWithInvalidCredentials() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
@@ -60,7 +60,7 @@ public class Login extends Base {
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 	}
 
-	@Test
+	@Test(priority=2)
 	public void verifyLoginWithInvalidEmailValidPassword() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
@@ -71,7 +71,7 @@ public class Login extends Base {
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 	}
 
-	@Test
+	@Test(priority=3)
 	public void verifyLoginWithValidEmailInvalidPassword() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(prop.getProperty("validemail"));
@@ -82,7 +82,7 @@ public class Login extends Base {
 		Assert.assertTrue(actualWarningMessage.contains(ExpectedMessage), "Warning is not displayed");
 	}
 
-	@Test
+	@Test(priority=4)
 	public void VerifyLoginWithoutCredentials() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.submitLogin();
