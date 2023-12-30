@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.tutorialninja.qa.base.Base;
 import com.tutorialninja.qa.pageObject.HomePage;
+import com.tutorialninja.qa.pageObject.SearchPage;
 
 public class SearchTest extends Base {
 	WebDriver driver;
@@ -26,24 +27,24 @@ public class SearchTest extends Base {
 	public void verifySearchWithValidproduct() {
 		HomePage homepage = new HomePage(driver);
 		homepage.searchBoxEnter(dataProp.getProperty("validProduct"));
-		homepage.searchButtonClick();
-		Assert.assertTrue(homepage.isProductPresentAfterSearch(), "Product is not Present");
+		SearchPage searchPage = homepage.searchButtonClick();
+		Assert.assertTrue(searchPage.isProductPresentAfterSearch(), "Product is not Present");
 	}
 
 	@Test(priority=2)
 	public void verifySearchWithInvalidproduct() {
 		HomePage homepage = new HomePage(driver);
 		homepage.searchBoxEnter(dataProp.getProperty("invalidProduct"));
-		homepage.searchButtonClick();
-		String errorMessage = homepage.noProductFoundErrorMessage();
+		SearchPage searchPage = homepage.searchButtonClick();
+		String errorMessage = searchPage.noProductFoundErrorMessage();
 		Assert.assertEquals(errorMessage, dataProp.getProperty("noProductPresentMessage"), "Product is  Present");
 	}
 
 	@Test(priority=3)
 	public void verifySearchWithNoProduct() {
 		HomePage homepage = new HomePage(driver);
-		homepage.searchButtonClick();
-		String errorMessage = homepage.noProductFoundErrorMessage();
+		SearchPage searchPage = homepage.searchButtonClick();
+		String errorMessage = searchPage.noProductFoundErrorMessage();
 		Assert.assertEquals(errorMessage, dataProp.getProperty("noProductPresentMessage"), "Product is  Present");
 	}
 }
