@@ -45,9 +45,6 @@ public class RegisterPage extends Utilities {
 	@FindBy(css = "input[type=\"submit\"]")
 	WebElement continueButton;
 
-	@FindBy(xpath = "//div[@id=\"content\"] //h1")
-	WebElement registerSuccessfulMessage;
-
 	@FindBy(css = "div[class*=\"alert-danger\"]")
 	WebElement alreadyExistEmailError;
 
@@ -101,12 +98,9 @@ public class RegisterPage extends Utilities {
 		privacyPolicyCheckbox.click();
 	}
 
-	public void continueButtonClick() {
+	public AccountSuccessfullPage continueButtonClick() {
 		continueButton.click();
-	}
-
-	public String registerSuccessful() {
-		return registerSuccessfulMessage.getText();
+		return new AccountSuccessfullPage(driver);
 	}
 
 	public String alreadyExistEmailErrorGet() {

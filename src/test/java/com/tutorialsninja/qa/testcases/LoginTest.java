@@ -7,15 +7,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.tutorialninja.qa.base.Base;
 import com.tutorialninja.qa.pageObject.AccountPage;
 import com.tutorialninja.qa.pageObject.HomePage;
 import com.tutorialninja.qa.pageObject.LoginPage;
 import com.tutorialninja.qa.utils.Utilities;
 
-public class Login extends Base {
+public class LoginTest extends Base {
 	WebDriver driver;
+	LoginPage loginPage;
+	AccountPage accountPage;
 
 	@BeforeMethod
 	public void setup() {
@@ -23,7 +24,7 @@ public class Login extends Base {
 		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnMyAccount();
-		homePage.clickOnLogin();
+	    loginPage = homePage.clickOnLogin();
 		driver.findElement(By.linkText("Login")).click();
 	}
 
@@ -41,17 +42,14 @@ public class Login extends Base {
 
 	@Test(dataProvider = "supplyTestData")
 	public void verifyLoginWithValidCredentials(String email, String pass) {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(email);
 		loginPage.enterPassword(pass);
-		loginPage.submitLogin();
-		AccountPage accountPage = new AccountPage(driver);
+		AccountPage accountPage = loginPage.submitLogin();
 		Assert.assertTrue(accountPage.isaccountPageDisplayed());
 	}
 
 	@Test(priority=1)
 	public void verifyLoginWithInvalidCredentials() {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
 		loginPage.enterPassword(dataProp.getProperty("invalidPass"));
 		loginPage.submitLogin();
@@ -62,7 +60,6 @@ public class Login extends Base {
 
 	@Test(priority=2)
 	public void verifyLoginWithInvalidEmailValidPassword() {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
 		loginPage.enterPassword(prop.getProperty("validpass"));
 		loginPage.submitLogin();
@@ -73,7 +70,6 @@ public class Login extends Base {
 
 	@Test(priority=3)
 	public void verifyLoginWithValidEmailInvalidPassword() {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(prop.getProperty("validemail"));
 		loginPage.enterPassword(dataProp.getProperty("invalidPass"));
 		loginPage.submitLogin();
@@ -84,7 +80,6 @@ public class Login extends Base {
 
 	@Test(priority=4)
 	public void VerifyLoginWithoutCredentials() {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.submitLogin();
 		String actualWarningMessage = loginPage.invalidLoginCredWarning();
 		String ExpectedMessage = dataProp.getProperty("emailPassNotMatchWarning");

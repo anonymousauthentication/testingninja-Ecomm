@@ -1,24 +1,28 @@
 package com.tutorialsninja.qa.testcases;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;import org.testng.annotations.Test;
 import com.tutorialninja.qa.base.Base;
+import com.tutorialninja.qa.pageObject.AccountSuccessfullPage;
+import com.tutorialninja.qa.pageObject.HomePage;
 import com.tutorialninja.qa.pageObject.RegisterPage;
 import com.tutorialninja.qa.utils.Utilities;
 
-public class Register extends Base {
+public class RegisterTest extends Base {
 	WebDriver driver;
+	RegisterPage registerPage;
+	AccountSuccessfullPage accountsuccessfullPage;
 
 	@BeforeMethod
 	public void setup() {
 		loadPropertiesFile();
 		driver = initializeBrowserAndOpenApplication(prop.getProperty("browser"));
-		driver.findElement(By.linkText("My Account")).click();
-		driver.findElement(By.linkText("Register")).click();
-		
+		HomePage homePage = new HomePage(driver);
+		homePage.clickOnMyAccount();
+	    registerPage = homePage.registerClick();
+
 	}
 
 	@AfterMethod
@@ -28,7 +32,6 @@ public class Register extends Base {
 
 	@Test(priority=1)
 	public void registerWithMandetoryFields() {
-		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.firstNameEnter(dataProp.getProperty("firstName"));
 		registerPage.lastNameEnter(dataProp.getProperty("lastName"));
 		registerPage.emailEnter(Utilities.generateEmailWithTimeStamp());
@@ -36,14 +39,13 @@ public class Register extends Base {
 		registerPage.passwordEnter(prop.getProperty("validpass"));
 		registerPage.confirmPasswordEnter(prop.getProperty("validpass"));
 		registerPage.privacyPolicyClick();
-		registerPage.continueButtonClick();
-		String successfulMessage = registerPage.registerSuccessful();
+		accountsuccessfullPage=	registerPage.continueButtonClick();
+		String successfulMessage = accountsuccessfullPage.registerSuccessful();
 		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));
-	}
+	}        
 
 	@Test(priority=2)
 	public void registerWithAllMandatoryFiels() throws InterruptedException {
-		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.firstNameEnter(dataProp.getProperty("firstName"));
 		registerPage.lastNameEnter(dataProp.getProperty("lastName"));
 		registerPage.emailEnter(Utilities.generateEmailWithTimeStamp());
@@ -52,14 +54,13 @@ public class Register extends Base {
 		registerPage.confirmPasswordEnter(prop.getProperty("validpass"));
 		registerPage.newsLetterCheckBox();
 		registerPage.privacyPolicyClick();
-		registerPage.continueButtonClick();
-		String successfulMessage = registerPage.registerSuccessful();
+		AccountSuccessfullPage accountsuccessfullPage = 	registerPage.continueButtonClick();
+		String successfulMessage = accountsuccessfullPage.registerSuccessful();
 		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));	
 	}
 
 	@Test(priority=3)
 	public void registerWithAlreadyExistEmail() {
-		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.firstNameEnter(dataProp.getProperty("firstName"));
 		registerPage.lastNameEnter(dataProp.getProperty("lastName"));
 		registerPage.emailEnter("testdemo2@gamail.com");
@@ -76,8 +77,6 @@ public class Register extends Base {
 
 	@Test(priority=4)
 	public void registerWithhoutFillingAnyDetail() {
-
-		RegisterPage registerPage = new RegisterPage(driver);
 		registerPage.continueButtonClick();
 		
 		String privacyPolicyMessag = registerPage.privacyPolicyValidationMessageGet();

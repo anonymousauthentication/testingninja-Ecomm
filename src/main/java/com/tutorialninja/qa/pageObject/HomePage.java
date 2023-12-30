@@ -20,6 +20,9 @@ public class HomePage {
 	@FindBy(linkText = "Login")
 	private WebElement loginOption;
 	
+	@FindBy(linkText="Register")
+	private WebElement registerButton;
+	
 	@FindBy(css="input[name=\"search\"]")
 	private WebElement searchBox;
 	
@@ -36,8 +39,15 @@ public class HomePage {
 		myAccountDropDownMenu.click();
 	}
 
-	public void clickOnLogin() {
+	public LoginPage clickOnLogin() {
 		loginOption.click();
+		return new LoginPage(driver);
+		
+	}
+	
+	public RegisterPage registerClick() {
+		registerButton.click();
+		return new RegisterPage(driver);
 	}
 	
 	public void searchBoxEnter(String searchTerm) {

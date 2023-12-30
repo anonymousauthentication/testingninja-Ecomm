@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import com.tutorialninja.qa.base.Base;
 import com.tutorialninja.qa.pageObject.HomePage;
 
-public class Search extends Base {
+public class SearchTest extends Base {
 	WebDriver driver;
 
 	@BeforeMethod
@@ -22,7 +22,7 @@ public class Search extends Base {
 		driver.quit();
 	}
 
-	@Test
+	@Test(priority=1)
 	public void verifySearchWithValidproduct() {
 		HomePage homepage = new HomePage(driver);
 		homepage.searchBoxEnter(dataProp.getProperty("validProduct"));
@@ -30,7 +30,7 @@ public class Search extends Base {
 		Assert.assertTrue(homepage.isProductPresentAfterSearch(), "Product is not Present");
 	}
 
-	@Test
+	@Test(priority=2)
 	public void verifySearchWithInvalidproduct() {
 		HomePage homepage = new HomePage(driver);
 		homepage.searchBoxEnter(dataProp.getProperty("invalidProduct"));
@@ -39,7 +39,7 @@ public class Search extends Base {
 		Assert.assertEquals(errorMessage, dataProp.getProperty("noProductPresentMessage"), "Product is  Present");
 	}
 
-	@Test
+	@Test(priority=3)
 	public void verifySearchWithNoProduct() {
 		HomePage homepage = new HomePage(driver);
 		homepage.searchButtonClick();

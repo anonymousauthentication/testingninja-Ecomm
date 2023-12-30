@@ -33,8 +33,9 @@ public class LoginPage {
 		passFiels.sendKeys(pass);
 	}
 	
-	public void submitLogin() {
+	public AccountPage submitLogin() {
 		loginSubmit.click();
+		return new AccountPage(driver);
 	}
 	
 	public String invalidLoginCredWarning() {
