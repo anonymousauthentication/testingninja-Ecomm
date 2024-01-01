@@ -3,22 +3,13 @@
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="com.tutorialsninja.qa.testcases.Register">
+      <class name="com.tutorialsninja.qa.testcases.LoginTest">
         <methods>
-          <include name="registerWithhoutFillingAnyDetail"/>
           <include name="setup"/>
+          <include name="verifyLoginWithValidCredentials" invocation-numbers="1 2"/>
           <include name="tearDown"/>
         </methods>
-      </class> <!-- com.tutorialsninja.qa.testcases.Register -->
-      <class name="com.tutorialsninja.qa.testcases.Login">
-        <methods>
-          <include name="verifyLoginWithInvalidEmailValidPassword"/>
-          <include name="tearDown"/>
-          <include name="setup"/>
-          <include name="verifyLoginWithInvalidCredentials"/>
-          <include name="verifyLoginWithValidCredentials"/>
-        </methods>
-      </class> <!-- com.tutorialsninja.qa.testcases.Login -->
+      </class> <!-- com.tutorialsninja.qa.testcases.LoginTest -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

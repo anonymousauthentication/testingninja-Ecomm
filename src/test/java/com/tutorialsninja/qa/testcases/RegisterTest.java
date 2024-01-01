@@ -40,8 +40,7 @@ public class RegisterTest extends Base {
 		registerPage.confirmPasswordEnter(prop.getProperty("validpass"));
 		registerPage.privacyPolicyClick();
 		accountsuccessfullPage=	registerPage.continueButtonClick();
-		String successfulMessage = accountsuccessfullPage.registerSuccessful();
-		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));
+		Assert.assertEquals(accountsuccessfullPage.registerSuccessful(), dataProp.getProperty("accountSuccessfulCreateMessage"));
 	}        
 
 	@Test(priority=2)
@@ -54,9 +53,7 @@ public class RegisterTest extends Base {
 		registerPage.confirmPasswordEnter(prop.getProperty("validpass"));
 		registerPage.newsLetterCheckBox();
 		registerPage.privacyPolicyClick();
-		AccountSuccessfullPage accountsuccessfullPage = 	registerPage.continueButtonClick();
-		String successfulMessage = accountsuccessfullPage.registerSuccessful();
-		Assert.assertEquals(successfulMessage, dataProp.getProperty("accountSuccessfulCreateMessage"));	
+		Assert.assertEquals(accountsuccessfullPage.registerSuccessful(), dataProp.getProperty("accountSuccessfulCreateMessage"));	
 	}
 
 	@Test(priority=3)
@@ -70,31 +67,18 @@ public class RegisterTest extends Base {
 		registerPage.newsLetterCheckBox();
 		registerPage.privacyPolicyClick();
 		registerPage.continueButtonClick();
-		String successfulMessage = registerPage.alreadyExistEmailErrorGet();
-		Assert.assertEquals(successfulMessage, dataProp.getProperty("emailAlreadyRegister"));
+		Assert.assertEquals(registerPage.alreadyExistEmailErrorGet(), dataProp.getProperty("emailAlreadyRegister"));
 
 	}
 
 	@Test(priority=4)
 	public void registerWithhoutFillingAnyDetail() {
 		registerPage.continueButtonClick();
-		
-		String privacyPolicyMessag = registerPage.privacyPolicyValidationMessageGet();
-		Assert.assertEquals(privacyPolicyMessag, dataProp.getProperty("privacyPolicyWarning"));
-
-		String firstNameValidation = registerPage.firstNameValidationMessageGet();
-		Assert.assertEquals(firstNameValidation, dataProp.getProperty("firstNameValidation"));
-
-		String lastNameValidation = registerPage.lastNameValidationMessageGet();
-		Assert.assertEquals(lastNameValidation, dataProp.getProperty("lastNameValidation"));
-
-		String emailValidation = registerPage.emailValidationMessageGet();
-		Assert.assertEquals(emailValidation, dataProp.getProperty("emailValidation"));
-
-		String tetephoneValidation = registerPage.telephoneValidationMessageGet();
-		Assert.assertEquals(tetephoneValidation, dataProp.getProperty("tetephoneValidation"));
-
-		String passwordValidation = registerPage.passValidationMessageGet();
-		Assert.assertEquals(passwordValidation, dataProp.getProperty("passwordValidation"));
+		Assert.assertEquals(registerPage.privacyPolicyValidationMessageGet(), dataProp.getProperty("privacyPolicyWarning"));
+		Assert.assertEquals(registerPage.firstNameValidationMessageGet(), dataProp.getProperty("firstNameValidation"));
+		Assert.assertEquals(registerPage.lastNameValidationMessageGet(), dataProp.getProperty("lastNameValidation"));
+		Assert.assertEquals(registerPage.emailValidationMessageGet(), dataProp.getProperty("emailValidation"));
+		Assert.assertEquals(registerPage.telephoneValidationMessageGet(), dataProp.getProperty("tetephoneValidation"));
+		Assert.assertEquals(registerPage.passValidationMessageGet(), dataProp.getProperty("passwordValidation"));
 	}
 }

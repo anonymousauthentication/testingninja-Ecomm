@@ -3,9 +3,9 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="com.tutorialsninja.qa.testcases.Register"/>
-          <class name="com.tutorialsninja.qa.testcases.Login"/>
-      <class name="com.tutorialsninja.qa.testcases.Search"/>
+      <class name="com.tutorialsninja.qa.testcases.RegisterTest"/>
+          <class name="com.tutorialsninja.qa.testcases.LoginTest"/>
+      <class name="com.tutorialsninja.qa.testcases.SearchTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
